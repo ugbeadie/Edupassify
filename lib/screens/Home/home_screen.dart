@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:coffee_card/utils/app_colors.dart';
+import 'widgets/stat_card.dart';
+import 'widgets/subject_carousel.dart';
+import 'all_subjects_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void _goToAllSubjects(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const AllSubjectsScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +35,15 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white70, fontSize: 20),
                   ),
                   const SizedBox(height: 4),
-                  Row(
-                    children: const [
-                      Text(
-                        "John Doe 👋",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    "John Doe 👋",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
-
                   // 🔍 Search Bar
                   Container(
                     decoration: BoxDecoration(
@@ -70,22 +75,22 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSpacing: 16,
                 physics: const NeverScrollableScrollPhysics(),
                 children: const [
-                  _StatCard(
+                  StatCard(
                     icon: Icons.description_outlined,
                     value: "24",
                     label: "Exams Taken",
                   ),
-                  _StatCard(
+                  StatCard(
                     icon: Icons.star_border,
                     value: "87%",
                     label: "Avg Score",
                   ),
-                  _StatCard(
+                  StatCard(
                     icon: Icons.book_outlined,
                     value: "12",
                     label: "Subjects",
                   ),
-                  _StatCard(
+                  StatCard(
                     icon: Icons.track_changes_outlined,
                     value: "5",
                     label: "Roadmaps",
@@ -93,67 +98,36 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            // 🧭 Subjects Carousel Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "My Subjects",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  GestureDetector(
+                    onTap: () => _goToAllSubjects(context),
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(
+                        color: AppColors.primaryBlue,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            const SubjectCarousel(), // ← horizontal scroll subjects
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  final IconData icon;
-  final String value;
-  final String label;
-
-  const _StatCard({
-    required this.icon,
-    required this.value,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min, // prevent stretching
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: AppColors.primaryBlue,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: Colors.white, size: 28),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryBlue,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(color: Colors.black54, fontSize: 14),
-          ),
-        ],
       ),
     );
   }

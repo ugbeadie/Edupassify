@@ -5,8 +5,25 @@ class ExamsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Exams Screen', style: TextStyle(fontSize: 20)),
+    final exams = ["JAMB UTME", "WAEC", "NECO", "Post UTME"];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Supported Exams")),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: exams.length,
+        itemBuilder: (context, index) {
+          final exam = exams[index];
+          return Card(
+            child: ListTile(
+              leading: const Icon(Icons.school, color: Colors.blue),
+              title: Text(exam),
+              subtitle: const Text("Exam description here..."),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          );
+        },
+      ),
     );
   }
 }

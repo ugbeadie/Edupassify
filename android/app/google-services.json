@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "428132040258",
+    "project_id": "edupassify",
+    "storage_bucket": "edupassify.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428132040258:android:8462ccf073844574fdb7db",
+        "android_client_info": {
+          "package_name": "com.example.coffee_card"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC8A8-W6yWYfjM4GHOZ5WmhaOdN-joR-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"edupassify","appId":"1:428132040258:android:8462ccf073844574fdb7db","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"edupassify","configurations":{"android":"1:428132040258:android:8462ccf073844574fdb7db","ios":"1:428132040258:ios:c13eb3077b3eb931fdb7db"}}}}}}
