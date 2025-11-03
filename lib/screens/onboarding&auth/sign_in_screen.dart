@@ -18,7 +18,6 @@ class _SignInScreenState extends State<SignInScreen> {
   String email = '', password = '';
   bool loading = false;
 
-  /// Handles user login using Firebase Auth
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => loading = true);
@@ -52,43 +51,54 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // ✅ Changed to align labels and textfields to the left
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // 🔵 Logo
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 40,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryBlue,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: const Text(
-                      'E',
-                      style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 40,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBlue,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: const Text(
+                        'E',
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 24),
 
-                  const Text(
-                    'Welcome Back',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryBlue,
+                  // Centered header texts
+                  const Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Welcome Back',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryBlue,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Sign in to continue learning',
+                          style: TextStyle(color: Colors.black54, fontSize: 18),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Sign in to continue learning',
-                    style: TextStyle(color: Colors.black54, fontSize: 18),
-                  ),
+
                   const SizedBox(height: 40),
 
                   _buildLabel("Email Address"),
@@ -171,32 +181,33 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   const SizedBox(height: 18),
 
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 16,
-                      ),
-                      children: [
-                        const TextSpan(text: "Don’t have an account? "),
-                        TextSpan(
-                          text: "Sign Up",
-                          style: const TextStyle(
-                            color: AppColors.primaryBlue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // ✅ Replace instead of push to avoid stack issues
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const SignUpScreen(),
-                                ),
-                              );
-                            },
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 16,
                         ),
-                      ],
+                        children: [
+                          const TextSpan(text: "Don’t have an account? "),
+                          TextSpan(
+                            text: "Sign Up",
+                            style: const TextStyle(
+                              color: AppColors.primaryBlue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const SignUpScreen(),
+                                  ),
+                                );
+                              },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -208,12 +219,16 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  static Widget _buildLabel(String text) => Text(
-    text,
-    style: const TextStyle(
-      color: AppColors.primaryBlue,
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
+  static Widget _buildLabel(String text) => Padding(
+    padding: const EdgeInsets.only(left: 4.0), // small indent
+    child: Text(
+      text,
+      textAlign: TextAlign.left,
+      style: const TextStyle(
+        color: AppColors.primaryBlue,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      ),
     ),
   );
 
