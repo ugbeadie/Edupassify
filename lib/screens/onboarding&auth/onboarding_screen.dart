@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coffee_card/utils/app_colors.dart';
+import 'package:coffee_card/screens/onboarding&auth/sign_in_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // ✅ Import this
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -17,7 +19,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'title': 'Master Your Exams',
       'desc':
           'Your complete study companion for WAEC, JAMB, NECO and more. Access thousands of past questions.',
-      'button': 'Get Started',
+      'button': 'Next',
     },
     {
       'title': 'AI-Powered Learning',
@@ -33,19 +35,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
 
-  void nextPage() {
+  // ✅ Save onboarding completion
+  Future<void> _completeOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasSeenOnboarding', true);
+  }
+
+  void nextPage() async {
     if (currentPage < pages.length - 1) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
     } else {
-      Navigator.pushReplacementNamed(context, '/signin');
+      await _completeOnboarding();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const SignInScreen()),
+      );
     }
   }
 
-  void skip() {
-    Navigator.pushReplacementNamed(context, '/signin');
+  void skip() async {
+    await _completeOnboarding();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const SignInScreen()),
+    );
   }
 
   @override
@@ -148,6 +164,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                         const SizedBox(height: 16),
 
+                        // --- Skip Button ---
                         if (!isLastPage)
                           SizedBox(
                             width: double.infinity,
